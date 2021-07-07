@@ -1,7 +1,7 @@
 package concurrent;
 
 public class Wget {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Thread tr = new Thread(
                 () -> {
                     try {
@@ -10,10 +10,13 @@ public class Wget {
                             Thread.sleep(1000);
                         }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Thread.currentThread().interrupt();
                     }
                 }
         );
         tr.start();
+        Thread.sleep(1000);
+        tr.interrupt();
+        tr.join();
     }
 }
