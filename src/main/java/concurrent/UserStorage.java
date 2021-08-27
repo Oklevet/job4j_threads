@@ -1,6 +1,8 @@
 package concurrent;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
@@ -9,12 +11,11 @@ public class UserStorage {
     @GuardedBy("this")
     private final HashMap<Integer, User> storage = new HashMap();
     @GuardedBy("this")
-    private int id = 0;
+    private final AtomicInteger id = new AtomicInteger(0);
 
     public synchronized boolean add(User user) {
-        id++;
-        storage.put(id, new User(id, user.getAmount()));
-        return storage.get(id).getAmount() == user.getAmount();
+        storage.putIfAbsent(id.incrementAndGet(), new User(id.get(), user.getAmount()));
+        return storage.get(id.get()).getAmount() == user.getAmount();
     };
 
     public synchronized User get(int id) {
@@ -38,7 +39,7 @@ public class UserStorage {
     };
 
     public synchronized boolean transfer(int fromId, int toId, int amount) {
-        if (storage.containsKey(fromId) && storage.containsKey(toId) && storage.get(fromId).getAmount() > amount) {
+        if (storage.get(fromId) != null && storage.get(toId) != null && storage.get(fromId).getAmount() > amount) {
             return update(new User(fromId, storage.get(fromId).getAmount() - amount))
                     && update(new User(toId, storage.get(toId).getAmount() + amount));
         }
