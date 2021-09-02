@@ -1,13 +1,12 @@
 package synch;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class SingleLockListTest {
     @Test
