@@ -2,10 +2,8 @@ package io;
 
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
@@ -23,7 +21,11 @@ public class SimpleBlockingQueueTest {
 
         @Override
         public void run() {
-            expect.add(sbq.poll());
+            try {
+                expect.add(sbq.poll());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -37,7 +39,11 @@ public class SimpleBlockingQueueTest {
         @Override
         public void run() {
             for (int i = 0; i < 6; i++) {
-                expect.add(sbq.poll());
+                try {
+                    expect.add(sbq.poll());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -51,7 +57,11 @@ public class SimpleBlockingQueueTest {
 
         @Override
         public void run() {
-            this.sbq.offer(new Random().nextInt(100));
+            try {
+                this.sbq.offer(new Random().nextInt(100));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -66,7 +76,13 @@ public class SimpleBlockingQueueTest {
 
         @Override
         public void run() {
-            arr.forEach(this.sbq::offer);
+            for (int i = 0; i < arr.size(); i++) {
+                try {
+                    sbq.offer(arr.get(i));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -112,5 +128,39 @@ public class SimpleBlockingQueueTest {
         Collections.sort(arr);
         Collections.sort(expect);
         assertEquals(expect, arr);
+    }
+
+    @Test
+    public void whenFetchAllThenGetIt() throws InterruptedException {
+        final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
+        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+        Thread producer = new Thread(
+                () -> {
+                    for (int i = 0; i < 5; i++) {
+                        try {
+                            queue.offer(i);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+        producer.start();
+        Thread consumer = new Thread(
+                () -> {
+                    while (!queue.isEmpty() || !Thread.currentThread().isInterrupted()) {
+                        try {
+                            buffer.add(queue.poll());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+        consumer.start();
+        producer.join();
+        consumer.interrupt();
+        consumer.join();
+        assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
     }
 }
