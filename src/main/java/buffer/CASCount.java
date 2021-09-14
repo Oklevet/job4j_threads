@@ -9,12 +9,9 @@ public class CASCount {
 
     public void increment() {
         int current;
-        while (true) {
+        do {
             current = count.get();
-            if (count.compareAndSet(current, current + 1)) {
-                return;
-            }
-        }
+        } while(!count.compareAndSet(current, current + 1));
     }
 
     public int get() {
