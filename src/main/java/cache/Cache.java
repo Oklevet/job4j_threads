@@ -10,7 +10,7 @@ public class Cache {
         return memory.putIfAbsent(model.getId(), model) == null;
     }
 
-    public boolean update(Base model) throws OptimisticException {
+    public boolean update(Base model) {
         return memory.computeIfPresent(model.getId(), (k, v) -> {
             if (v.getVersion() != model.getVersion()) {
                 try {
@@ -26,6 +26,14 @@ public class Cache {
     }
 
     public void delete(Base model) {
-        memory.remove(model);
+        memory.entrySet().removeIf(entry -> entry.getKey() == model.getId());
+    }
+
+    public int size() {
+        return memory.size();
+    }
+
+    public Base get(int index) {
+        return memory.get(index);
     }
 }

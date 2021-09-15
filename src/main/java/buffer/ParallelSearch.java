@@ -19,7 +19,7 @@ public class ParallelSearch {
         );
         final Thread consumer = new Thread(
                 () -> {
-                        while (!Thread.currentThread().isInterrupted() || queue.size() > 0) {
+                    while (!Thread.currentThread().isInterrupted() || queue.size() > 0) {
                         try {
                             System.out.println(queue.poll());
                         } catch (InterruptedException e) {

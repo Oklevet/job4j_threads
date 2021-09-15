@@ -4,7 +4,7 @@ import net.jcip.annotations.ThreadSafe;
 import java.util.concurrent.atomic.AtomicReference;
 
 @ThreadSafe
-public class CASStack <T> {
+public class CASStack<T> {
     private final AtomicReference<Node<T>> head = new AtomicReference<>();
 
     public void push(T value) {
