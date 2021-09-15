@@ -146,7 +146,6 @@ public class SimpleBlockingQueueTest {
                 }
         );
         producer.start();
-        System.out.println("prod started");
         Thread consumer = new Thread(
                 () -> {
                     while (!queue.isEmpty() || !Thread.currentThread().isInterrupted()) {
@@ -158,15 +157,10 @@ public class SimpleBlockingQueueTest {
                     }
                 }
         );
-        System.out.println("start");
         consumer.start();
-        System.out.println("cons started");
         producer.join();
-        System.out.println("prod join");
         consumer.interrupt();
-        System.out.println("cons interrupted");
         consumer.join();
-        System.out.println("cons join");
         assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
     }
 }
