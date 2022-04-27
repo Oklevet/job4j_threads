@@ -1,10 +1,10 @@
-package totalRecall;
+package totalrecall;
 import java.io.*;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 
-public class WgetV2 implements Runnable{
+public class WgetV2 implements Runnable {
     private final String url;
     private final String name;
     private final long speed;
