@@ -22,7 +22,6 @@ public class Cache {
             memory.get(k).setName(model.getName());
             return model;
         }).equals(model);
-
     }
 
     public void delete(Base model) {
