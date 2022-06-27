@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public class WgetArgValid {
     private String[] args;
+
     public WgetArgValid(String[] args) {
         this.args = args;
         validation(args);
@@ -46,8 +47,7 @@ public class WgetArgValid {
                         + "$# Anchor to end of string.",
                 Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
         Matcher matcher = pattern.matcher(text);
-        boolean isMatch = matcher.matches();
-        return isMatch;
+        return matcher.matches();
     }
 
     public String getUrl() {
