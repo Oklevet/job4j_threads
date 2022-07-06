@@ -46,6 +46,6 @@ public class WgetV2 implements Runnable {
         Thread wget = new Thread(new WgetV2(url, name, speed, start));
         wget.start();
         wget.join();
-        //System.out.println("Duration: " + Duration.between(start, Instant.now()).toMillis());           // debug in console
+        //System.out.println("Duration: " + Duration.between(start, Instant.now()).toMillis());          // debug in console
     }
 }

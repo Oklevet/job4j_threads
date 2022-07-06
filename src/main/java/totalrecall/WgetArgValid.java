@@ -20,7 +20,7 @@ public class WgetArgValid {
         try {
             URL u = new URL(args[0]);
         } catch (MalformedURLException e) { 
-            throw new IllegalArgumentException("The selected URL is not valid.");
+            throw new IllegalArgumentException("The selected URL is invalid.");
         }
         if (Integer.parseInt(args[1]) <= 0) {
             throw new IllegalArgumentException("The specified program execution time must be positive.");
