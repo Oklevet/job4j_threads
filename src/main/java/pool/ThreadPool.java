@@ -9,7 +9,7 @@ public class ThreadPool {
     private final List<Thread> threads = new LinkedList<>();
     private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>();
 
-    public ThreadPool() throws InterruptedException {
+    public ThreadPool() {
         int size = Runtime.getRuntime().availableProcessors();
         Thread th = new TaskRun();
         for (int i = 0; i < size; i++) {
@@ -33,7 +33,7 @@ public class ThreadPool {
                 System.out.println(Thread.currentThread().getName());
                 try {
                     Runnable job = tasks.poll();
-                    System.out.println('2');        //not run
+                    System.out.println('2');
                     job.run();
                     System.out.println('1');
                 } catch (InterruptedException e) {
