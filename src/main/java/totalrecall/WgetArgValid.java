@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class WgetArgValid {
     private String[] args;
 
