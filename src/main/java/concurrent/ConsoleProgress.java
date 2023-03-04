@@ -7,6 +7,7 @@ public class ConsoleProgress implements Runnable {
         Thread.sleep(20000);
         progress.interrupt();
     }
+
     @Override
     public void run() {
         String[] process = new String[] {"\\", "\\|", "\\|/" };

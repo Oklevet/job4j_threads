@@ -46,6 +46,7 @@ public class SimpleBlockingQueueTest {
             }
         }
     }
+
     private static class Producer extends Thread {
         private final SimpleBlockingQueue sbq;
 
@@ -94,6 +95,7 @@ public class SimpleBlockingQueueTest {
         System.out.println(sbq.size());
         assertThat(sbq.size(), is(1));
     }
+
     @Test
     public void when1Produc1Con() throws InterruptedException {
         SimpleBlockingQueue sbq = new SimpleBlockingQueue(10);
@@ -107,6 +109,7 @@ public class SimpleBlockingQueueTest {
         System.out.println(sbq.size());
         assertThat(sbq.size(), is(0));
     }
+
     @Test
     public void when1ProducMass1Con() throws InterruptedException {
         List<Integer> arr = new ArrayList<>(List.of(1, 3, 5, 6, 7, 9));
