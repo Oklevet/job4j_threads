@@ -14,7 +14,6 @@ public class ParallelStreamExample {
         Optional<Integer> multiplication = stream.reduce((a, b) -> a * b);
         System.out.println(multiplication.get());
 
-
         IntStream parallel = IntStream.range(1, 100).parallel();
         System.out.println(parallel.isParallel());
         IntStream sequential = parallel.sequential();
