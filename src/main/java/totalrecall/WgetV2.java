@@ -39,7 +39,7 @@ public class WgetV2 implements Runnable {
     /**
      * String for debug in console
      * System.out.println("Duration: " + Duration.between(start, Instant.now()).toMillis());
-     * @param args input https://raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml 1 download_temp.xml
+     * @param args input raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml 1 download_temp.xml
      */
 
     public static void main(String[] args) throws InterruptedException {
