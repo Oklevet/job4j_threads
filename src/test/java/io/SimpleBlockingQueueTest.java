@@ -88,10 +88,10 @@ public class SimpleBlockingQueueTest {
     @Test
     public void when1Produc() throws InterruptedException {
         SimpleBlockingQueue sbq = new SimpleBlockingQueue(10);
-        Thread produc = new Producer(sbq);
-        produc.start();
-        produc.join();
-        produc.join();
+        Thread product = new Producer(sbq);
+        product.start();
+        product.join();
+        product.join();
         System.out.println(sbq.size());
         assertThat(sbq.size(), is(1));
     }
