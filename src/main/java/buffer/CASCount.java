@@ -1,6 +1,6 @@
 package buffer;
-import net.jcip.annotations.ThreadSafe;
 
+import net.jcip.annotations.ThreadSafe;
 import java.util.concurrent.atomic.AtomicReference;
 
 @ThreadSafe
