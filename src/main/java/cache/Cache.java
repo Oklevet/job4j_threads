@@ -13,19 +13,16 @@ public class Cache {
     public boolean update(Base model) {
         return memory.computeIfPresent(model.getId(), (k, v) -> {
             if (v.getVersion() != model.getVersion()) {
-                try {
-                    throw new OptimisticException("Versions re different");
-                } catch (OptimisticException e) {
-                    e.printStackTrace();
-                }
+                throw new OptimisticException("Versions re different");
             }
-            memory.get(k).setName(model.getName());
-            return model;
-        }).equals(model);
+            Base updBase = new Base(model.getId(), model.getVersion() + 1);
+            updBase.setName(model.getName());
+            return updBase;
+        }) != null;
     }
 
     public void delete(Base model) {
-        memory.entrySet().removeIf(entry -> entry.getKey() == model.getId());
+        memory.remove(model.getId());
     }
 
     public int size() {

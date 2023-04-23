@@ -1,11 +1,16 @@
 package cache;
 
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.testng.annotations.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class CacheTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void whenAdd() {
@@ -40,4 +45,13 @@ public class CacheTest {
         assertThat(cache.get(2).getName(), is("asd"));
     }
 
+    @Test
+    void whenAddandUpdToExcep() {
+        Cache cache = new Cache();
+        cache.add(new Base(1, 0));
+        Base wrongVers = new Base(1, 1);
+        assertThatThrownBy(() -> cache.update(wrongVers))
+                .isInstanceOf(OptimisticException.class)
+                .hasMessageContaining("Versions re different");
+    }
 }
