@@ -4,10 +4,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class EmailNotification {
-    ExecutorService pool = Executors.newCachedThreadPool();
+    private final ExecutorService pool = Executors.newCachedThreadPool();
 
     public void close() {
         pool.shutdown();
+        while (!pool.isTerminated()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void emailTo(User user) {
