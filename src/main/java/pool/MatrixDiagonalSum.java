@@ -1,5 +1,6 @@
 package pool;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -51,6 +52,6 @@ public class MatrixDiagonalSum {
         int[] arr1 = {3, 5};
         int[] arr2 = {7, 9};
         int[][] arr = {arr1, arr2};
-        asyncSum(arr);
+        System.out.println(Arrays.toString(asyncSum(arr)));
     }
 }
