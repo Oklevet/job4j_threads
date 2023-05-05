@@ -87,7 +87,7 @@ public class AsynchronMeths {
 
     public static void thenComposeExample() throws Exception {
         CompletableFuture<String> result = goToTrash().thenCompose(a -> buyProduct("Milk"));
-        result.get(); // wait calculations;
+        result.get();
     }
 
     public static void thenCombineExample() throws Exception {
