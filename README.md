@@ -4,6 +4,8 @@
 Temporary text for closing up to 150 characters long. 
 Contacts: Telegram - @StartsevNik
 
+В курсе производилась работа с ветками git.git status
+
 
 
 
