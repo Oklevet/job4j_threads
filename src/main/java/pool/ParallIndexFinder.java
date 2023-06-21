@@ -19,22 +19,24 @@ public class ParallIndexFinder<T> extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
+        int midPos;
         if (obj == null) {
             return -1;
         }
         if (endPos - startPos < 11) {
-            return linerSort(array, obj, startPos, endPos);
+            return findIndexInArr();
         }
 
-        ParallIndexFinder<T> firstFinder = new ParallIndexFinder<>(array, obj, startPos, (endPos - 1) / 2);
-        ParallIndexFinder<T> secondFinder = new ParallIndexFinder<>(array, obj, (endPos - 1) / 2 + 1, endPos);
+        midPos = (endPos - 1) / 2;
+        ParallIndexFinder<T> firstFinder = new ParallIndexFinder<>(array, obj, startPos, midPos);
+        ParallIndexFinder<T> secondFinder = new ParallIndexFinder<>(array, obj, midPos + 1, endPos);
         firstFinder.fork();
         secondFinder.fork();
         return Math.max(firstFinder.join(), secondFinder.join());
     }
 
-    public int linerSort(T[] array, T obj, int startPos, int endPos) {
-        for (int i = startPos; i < endPos; i++) {
+    public int findIndexInArr() {
+        for (int i = startPos; i < endPos + 1; i++) {
             if (array[i].equals(obj)) {
                 return i;
             }
@@ -44,7 +46,6 @@ public class ParallIndexFinder<T> extends RecursiveTask<Integer> {
 
     public static <T> int sort(T[] array, T obj) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        System.out.println(array.length);
         return forkJoinPool.invoke(new ParallIndexFinder<>(array, obj, 0, (array.length - 1)));
     }
 }
