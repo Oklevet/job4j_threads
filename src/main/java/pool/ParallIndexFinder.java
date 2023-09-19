@@ -19,7 +19,6 @@ public class ParallIndexFinder<T> extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        int midPos;
         if (obj == null) {
             return -1;
         }
@@ -27,7 +26,7 @@ public class ParallIndexFinder<T> extends RecursiveTask<Integer> {
             return findIndexInArr();
         }
 
-        midPos = (endPos - 1) / 2;
+        int midPos = (endPos - 1) / 2;
         ParallIndexFinder<T> firstFinder = new ParallIndexFinder<>(array, obj, startPos, midPos);
         ParallIndexFinder<T> secondFinder = new ParallIndexFinder<>(array, obj, midPos + 1, endPos);
         firstFinder.fork();
@@ -36,7 +35,7 @@ public class ParallIndexFinder<T> extends RecursiveTask<Integer> {
     }
 
     public int findIndexInArr() {
-        for (int i = startPos; i < endPos + 1; i++) {
+        for (int i = startPos; i <= endPos; i++) {
             if (array[i].equals(obj)) {
                 return i;
             }
